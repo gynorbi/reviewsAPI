@@ -1,19 +1,16 @@
 package com.udacity.course3.reviews.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "comments")
 public class Comment {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String text;
     private String username;
-    @ManyToOne
-    private Review review;
+    private Integer reviewId;
 
     public Comment() { }
 
@@ -41,11 +38,11 @@ public class Comment {
         this.username = username;
     }
 
-    public Review getReview() {
-        return review;
+    public Integer getReviewId() {
+        return reviewId;
     }
 
-    public void setReview(Review review) {
-        this.review = review;
+    public void setReviewId(Integer reviewId) {
+        this.reviewId = reviewId;
     }
 }
