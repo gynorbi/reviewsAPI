@@ -18,6 +18,14 @@ public class Review {
 
     public Review() { }
 
+    public Review(String title, String description, Integer score, String username, Integer productId) {
+        this.title = title;
+        this.description = description;
+        this.score = score;
+        this.username = username;
+        this.productId = productId;
+    }
+
     public Integer getId() {
         return id;
     }

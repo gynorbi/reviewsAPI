@@ -14,6 +14,12 @@ public class Comment {
 
     public Comment() { }
 
+    public Comment(String text, String username, Integer reviewId) {
+        this.text = text;
+        this.username = username;
+        this.reviewId = reviewId;
+    }
+
     public Integer getId() {
         return id;
     }
