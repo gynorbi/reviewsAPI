@@ -1,7 +1,7 @@
 package com.udacity.course3.reviews.entities;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -11,6 +11,8 @@ public class Product {
     private Integer id;
     private String name;
     private String description;
+    @OneToMany(mappedBy = "productId")
+    private List<Review> reviews;
 
     public Product() { }
 
@@ -37,5 +39,9 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
     }
 }
