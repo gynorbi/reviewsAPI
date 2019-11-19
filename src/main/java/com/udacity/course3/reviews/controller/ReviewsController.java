@@ -1,6 +1,5 @@
 package com.udacity.course3.reviews.controller;
 
-import com.udacity.course3.reviews.entities.Product;
 import com.udacity.course3.reviews.entities.Review;
 import com.udacity.course3.reviews.repositories.ProductRepository;
 import com.udacity.course3.reviews.repositories.ReviewRepository;
@@ -9,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Spring REST controller for working with review entity.
@@ -40,8 +38,7 @@ public class ReviewsController {
     public ResponseEntity<?> createReviewForProduct(
             @PathVariable("productId") Integer productId,
             @RequestBody Review review) {
-        Optional<Product> product = productRepository.findById(productId);
-        if(product.isPresent()){
+        if(productRepository.existsById(productId)){
             review.setProductId(productId);
             Review savedReview = reviewRepository.save(review);
             return new ResponseEntity<>(savedReview,HttpStatus.CREATED);
@@ -55,17 +52,25 @@ public class ReviewsController {
      * Lists reviews by product.
      *
      * @param productId The id of the product.
-     * @return The list of reviews.
+     * @param score The score range of the review. 1 and 2 -> low; 3 and 4 -> medium; 5 -> high
+     * @return The list of reviews or 404 if product id is not found.
      */
     @RequestMapping(value = "/reviews/products/{productId}", method = RequestMethod.GET)
-    public ResponseEntity<List<?>> listReviewsForProduct(@PathVariable("productId") Integer productId) {
-        Optional<Product> product = productRepository.findById(productId);
-        if(product.isPresent()){
-            List<Review> productReviews = reviewRepository.findByProductId(productId);
-            return new ResponseEntity<>(productReviews,HttpStatus.OK);
-        }
-        else{
+    public ResponseEntity<List<?>> listReviewsForProduct(@PathVariable("productId") Integer productId,
+                                                         @RequestParam(required = false, value = "score") String score) {
+        if (!productRepository.existsById(productId)) {
             throw new ProductNotFoundException(productId);
         }
+        List<Review> productReviews;
+        if (score != null && score.toLowerCase().equals("low")) {
+            productReviews = reviewRepository.findLowScoreByProductId(productId);
+        } else if (score != null && score.toLowerCase().equals("medium")) {
+            productReviews = reviewRepository.findMediumScoreByProductId(productId);
+        } else if (score != null && score.toLowerCase().equals("high")) {
+            productReviews = reviewRepository.findHighScoreByProductId(productId);
+        } else {
+            productReviews = reviewRepository.findByProductId(productId);
+        }
+        return new ResponseEntity<>(productReviews, HttpStatus.OK);
     }
 }

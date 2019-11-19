@@ -32,7 +32,7 @@ public class CommentRepositoryTests {
     @Test
     public void findCommentOnNonExistingReview(){
         List<Comment> comments = commentRepository.findByReviewId(100);
-        Assert.assertTrue("There should be no comments.",comments.size() == 0);
+        Assert.assertEquals("There should be no comments.", 0, comments.size());
     }
 
     @Test
@@ -43,7 +43,7 @@ public class CommentRepositoryTests {
 
         List<Comment> comments = commentRepository.findByReviewId(review.getId());
 
-        Assert.assertTrue("There should be one comment.",comments.size() == 1);
+        Assert.assertEquals("There should be one comment.", 1, comments.size());
         Assert.assertEquals("The comment should be the same as the inserted one.", comment.getId(), comments.get(0).getId());
     }
 }

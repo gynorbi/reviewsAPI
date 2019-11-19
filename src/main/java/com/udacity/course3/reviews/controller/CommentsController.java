@@ -40,8 +40,7 @@ public class CommentsController {
     public ResponseEntity<?> createCommentForReview(
             @PathVariable("reviewId") Integer reviewId,
             @RequestBody Comment comment) {
-        Optional<Review> review = reviewRepository.findById(reviewId);
-        if(review.isPresent()){
+        if(reviewRepository.existsById(reviewId)){
             comment.setReviewId(reviewId);
             Comment savedComment = commentRepository.save(comment);
             return new ResponseEntity<>(savedComment, HttpStatus.CREATED);
@@ -62,8 +61,8 @@ public class CommentsController {
      */
     @RequestMapping(value = "/reviews/{reviewId}", method = RequestMethod.GET)
     public List<?> listCommentsForReview(@PathVariable("reviewId") Integer reviewId) {
-        Optional<Review> review = reviewRepository.findById(reviewId);
-        if(review.isPresent()){
+
+        if(reviewRepository.existsById(reviewId)){
             return commentRepository.findByReviewId(reviewId);
         }
         else{
