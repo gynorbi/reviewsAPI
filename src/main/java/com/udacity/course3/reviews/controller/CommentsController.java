@@ -8,8 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Spring REST controller for working with comment entity.
@@ -39,7 +39,7 @@ public class CommentsController {
     @RequestMapping(value = "/reviews/{reviewId}", method = RequestMethod.POST)
     public ResponseEntity<?> createCommentForReview(
             @PathVariable("reviewId") Integer reviewId,
-            @RequestBody Comment comment) {
+            @Valid @RequestBody Comment comment) {
         if(reviewRepository.existsById(reviewId)){
             comment.setReviewId(reviewId);
             Comment savedComment = commentRepository.save(comment);

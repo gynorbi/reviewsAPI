@@ -1,6 +1,8 @@
 package com.udacity.course3.reviews.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -9,7 +11,9 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @NotEmpty(message = "Please provide a non-empty name")
     private String name;
+    @NotNull(message = "Please provide a description")
     private String description;
     @OneToMany(mappedBy = "productId")
     private List<Review> reviews;

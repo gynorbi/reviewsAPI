@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -37,7 +38,7 @@ public class ReviewsController {
     @RequestMapping(value = "/reviews/products/{productId}", method = RequestMethod.POST)
     public ResponseEntity<?> createReviewForProduct(
             @PathVariable("productId") Integer productId,
-            @RequestBody Review review) {
+            @Valid @RequestBody Review review) {
         if(productRepository.existsById(productId)){
             review.setProductId(productId);
             Review savedReview = reviewRepository.save(review);
