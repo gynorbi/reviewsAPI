@@ -43,13 +43,9 @@ public class ProductsController {
      */
     @RequestMapping(value = "/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") Integer id) {
-        Optional<Product> product = productRepository.findById(id);
-        if(product.isPresent()){
+        Product product = productRepository.findById(id).orElseThrow(()->new ProductNotFoundException(id));
+            product.setAverage(productRepository.getAverageScoreById(product.getId()));
             return new ResponseEntity<>(product,HttpStatus.OK);
-        }
-        else{
-            throw new ProductNotFoundException(id);
-        }
     }
 
     /**

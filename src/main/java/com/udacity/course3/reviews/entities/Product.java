@@ -17,6 +17,8 @@ public class Product {
     private String description;
     @OneToMany(mappedBy = "productId")
     private List<Review> reviews;
+    @Transient
+    private Double average;
 
     public Product() { }
 
@@ -47,5 +49,13 @@ public class Product {
 
     public List<Review> getReviews() {
         return reviews;
+    }
+
+    public Double getAverage() {
+        return average;
+    }
+
+    public void setAverage(Double average) {
+        this.average = average;
     }
 }
