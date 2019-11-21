@@ -1,7 +1,7 @@
 package com.udacity.course3.reviews.controller;
 
 import com.udacity.course3.reviews.entities.Product;
-import com.udacity.course3.reviews.repositories.ProductRepository;
+import com.udacity.course3.reviews.jpa.ProductRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -59,6 +59,6 @@ public class ProductsController {
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<?> listProducts() {
-        return (List<Product>)productRepository.findAll();
+        return productRepository.findAll();
     }
 }

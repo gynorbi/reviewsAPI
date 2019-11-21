@@ -1,9 +1,11 @@
 package com.udacity.course3.reviews;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
+@EnableAutoConfiguration
 public class ReviewsApplication {
 
 	public static void main(String[] args) {

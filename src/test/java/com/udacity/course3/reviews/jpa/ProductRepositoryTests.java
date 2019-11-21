@@ -1,4 +1,4 @@
-package com.udacity.course3.reviews.repositories;
+package com.udacity.course3.reviews.jpa;
 
 import org.junit.Assert;
 import org.junit.Test;

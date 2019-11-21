@@ -1,4 +1,4 @@
-package com.udacity.course3.reviews.repositories;
+package com.udacity.course3.reviews.jpa;
 
 import com.udacity.course3.reviews.entities.Comment;
 import com.udacity.course3.reviews.entities.Product;
