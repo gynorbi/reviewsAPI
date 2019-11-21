@@ -3,30 +3,22 @@ package com.udacity.course3.reviews.entities;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Document("reviews")
 public class ReviewDocument {
     @Id
     private Integer id;
-    //@NotEmpty(message = "Please provide a non-empty title")
     private String title;
     private String description;
-    //@NotNull(message = "Please provide a score")
-    // @Min(value = 1,message = "Score should be at least 1")
-    //@Max(value = 5,message = "Score should be maximum 5")
     private Integer score;
-    //@NotEmpty(message = "Please provide a username")
     private String username;
     private List<CommentDocument> comments;
 
     public ReviewDocument() { }
 
-    public ReviewDocument(String title, String description, Integer score, String username, List<CommentDocument> comments) {
+    public ReviewDocument(Integer id, String title, String description, Integer score, String username, List<CommentDocument> comments) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.score = score;

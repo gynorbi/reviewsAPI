@@ -3,11 +3,14 @@ package com.udacity.course3.reviews.util;
 import com.udacity.course3.reviews.entities.Comment;
 import com.udacity.course3.reviews.entities.Product;
 import com.udacity.course3.reviews.entities.Review;
+import com.udacity.course3.reviews.entities.ReviewDocument;
 import com.udacity.course3.reviews.jpa.CommentRepository;
 import com.udacity.course3.reviews.jpa.ProductRepository;
 import com.udacity.course3.reviews.jpa.ReviewRepository;
+import com.udacity.course3.reviews.mongo.ReviewDocumentRepository;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class TestData {
     public static Product createDummyProduct(ProductRepository productRepository){
@@ -49,5 +52,22 @@ public class TestData {
         );
 
         return reviewRepository.saveAll(reviews);
+    }
+
+    public static List<ReviewDocument> createDummyReviewDocumentsWithScores(ReviewDocumentRepository reviewDocumentRepository){
+        List<ReviewDocument> reviewDocuments = Arrays.asList(
+                new ReviewDocument(1,"Nice","I like it",5,"user1",null),
+                new ReviewDocument(2,"Cool","I enjoy it",5,"user2",null),
+                new ReviewDocument(3,"Ok","Don't know yet",3,"user3",null),
+                new ReviewDocument(4,"Love it","Great product",5,"user4",null),
+                new ReviewDocument(5,"Quite bad","Regret buying it",2,"user5",null),
+                new ReviewDocument(6,"Terrible","I want my money back",1,"user6",null),
+                new ReviewDocument(7,"Splendid","Awesome product",5,"user7",null),
+                new ReviewDocument(8,"Had worse","Broke after 1 year",3,"user8",null),
+                new ReviewDocument(9,"Had better","Too expensive for what it gives",4,"user9",null),
+                new ReviewDocument(10,"Super","Love it",5,"user10",null)
+        );
+
+        return reviewDocumentRepository.saveAll(reviewDocuments);
     }
 }

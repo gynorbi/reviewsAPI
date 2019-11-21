@@ -1,8 +1,7 @@
 package com.udacity.course3.reviews.controller;
 
 import com.udacity.course3.reviews.entities.Comment;
-import com.udacity.course3.reviews.jpa.CommentRepository;
-import com.udacity.course3.reviews.jpa.ReviewRepository;
+import com.udacity.course3.reviews.services.ReviewService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +16,10 @@ import java.util.List;
 @RequestMapping("/comments")
 public class CommentsController {
 
-    private CommentRepository commentRepository;
-    private ReviewRepository reviewRepository;
+    private ReviewService reviewService;
 
-    public CommentsController(CommentRepository commentRepository, ReviewRepository reviewRepository) {
-        this.commentRepository = commentRepository;
-        this.reviewRepository = reviewRepository;
+    public CommentsController(ReviewService reviewService) {
+        this.reviewService = reviewService;
     }
 
     /**
@@ -39,14 +36,8 @@ public class CommentsController {
     public ResponseEntity<?> createCommentForReview(
             @PathVariable("reviewId") Integer reviewId,
             @Valid @RequestBody Comment comment) {
-        if(reviewRepository.existsById(reviewId)){
-            comment.setReviewId(reviewId);
-            Comment savedComment = commentRepository.save(comment);
-            return new ResponseEntity<>(savedComment, HttpStatus.CREATED);
-        }
-        else{
-            throw new ReviewNotFoundException(reviewId);
-        }
+        reviewService.addCommentToReview(reviewId,comment);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     /**
@@ -60,12 +51,6 @@ public class CommentsController {
      */
     @RequestMapping(value = "/reviews/{reviewId}", method = RequestMethod.GET)
     public List<?> listCommentsForReview(@PathVariable("reviewId") Integer reviewId) {
-
-        if(reviewRepository.existsById(reviewId)){
-            return commentRepository.findByReviewId(reviewId);
-        }
-        else{
-            throw new ReviewNotFoundException(reviewId);
-        }
+        return reviewService.getCommentsForReview(reviewId);
     }
 }

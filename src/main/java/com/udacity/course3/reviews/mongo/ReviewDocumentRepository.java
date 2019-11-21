@@ -9,10 +9,10 @@ import java.util.List;
 
 @Repository
 public interface ReviewDocumentRepository extends MongoRepository<ReviewDocument,Integer> {
-   /* @Query("SELECT r FROM ReviewDocument r WHERE r.id IN (:reviewDocumentIds) AND r.score <= 2")
-    List<ReviewDocument> getLowScoreReviews(List<Integer> reviewDocumentIds);
-    @Query("SELECT r FROM ReviewDocument r WHERE r.id IN (:reviewDocumentIds) AND r.score BETWEEN 3 AND 4")
-    List<ReviewDocument> getMediumScoreReviews(List<Integer> reviewDocumentIds);
-    @Query("SELECT r FROM ReviewDocument r WHERE r.id IN (:reviewDocumentIds) AND r.score = 5")
-    List<ReviewDocument> getHighScoreReviews(List<Integer> reviewDocumentIds);*/
+    @Query("{_id:{$in:?0},score:{$lte:2}}")
+    List<ReviewDocument> findLowScoreReviews(List<Integer> reviewDocumentIds);
+    @Query("{_id:{$in:?0},score:{$gte:3,$lte:4}}")
+    List<ReviewDocument> findMediumScoreReviews(List<Integer> reviewDocumentIds);
+    @Query("{_id:{$in:?0},score:5}")
+    List<ReviewDocument> findHighScoreReviews(List<Integer> reviewDocumentIds);
 }
